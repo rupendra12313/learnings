@@ -1,4 +1,4 @@
-fetch("data.json")
+fetch('https://dummyjson.com/products')
   .then((res) => res.json())
   .then((json) => {
     const data = json.products;
