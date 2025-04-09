@@ -18,36 +18,26 @@ fetch("data.json")
       "dimensions.depth",
     ];
 
-    const headerRow = document.createElement("tr");
+    let html = "<tr>";
     headers.forEach((key) => {
-      const th = document.createElement("th");
-      th.textContent = key;
-      headerRow.appendChild(th);
+      html += `<th>${key}</th>`;
     });
-    table.appendChild(headerRow);
+    html += "</tr>";
 
     data.forEach((product) => {
-      const row = document.createElement("tr");
-
+      html += "<tr>";
       headers.forEach((key) => {
-        const td = document.createElement("td");
-
         const keys = key.split(".");
         let value = product;
         for (const k of keys) {
           value = value?.[k] ?? "N/A";
         }
 
-        
-        if (key.startsWith("review.") && Array.isArray(product.reviews)) {
-          value = product.reviews[0]?.[keys[1]] ?? "N/A";
-        }
-
-        td.textContent = value;
-        row.appendChild(td);
+        html += `<td>${value}</td>`;
       });
-
-      table.appendChild(row);
+      html += "</tr>";
     });
+
+    table.innerHTML = html;
   })
   .catch((err) => console.error("Error loading JSON:", err));
